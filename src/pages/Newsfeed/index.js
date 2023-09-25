@@ -23,7 +23,7 @@ function Newsfeed() {
     <DataLoaderOverlay isLoading={isLoading || !selectedNewsfeed}>
       {selectedNewsfeed && (
         <>
-          <main className="w-full h-full mx-auto">
+          <main className="w-full h-full mx-auto max-w-[800px]">
             <SectionOne
               image={selectedNewsfeed.sectionOneImage}
               title={selectedNewsfeed.sectionOneTitle}

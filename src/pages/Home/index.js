@@ -1,19 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import DataLoaderOverlay from "../../components/DataLoaderOverlay";
 import { useLoading } from "../../state/loading/hooks";
 import { Link } from "react-router-dom";
 import { PATHS } from "../../constants";
 import { useNewsfeed } from "../../state/newsfeed/hooks";
-import { useApp } from "../../context/AppProvider";
 
 function Home() {
   const { isLoading } = useLoading();
   const { newsfeeds } = useNewsfeed();
-  const { initApp } = useApp();
 
-  useEffect(() => {
-    initApp();
-  }, []);
   return (
     <DataLoaderOverlay isLoading={isLoading}>
       <div className="h-screen w-full relative">

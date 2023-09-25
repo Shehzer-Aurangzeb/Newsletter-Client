@@ -81,6 +81,11 @@ function AppProvider({ children }) {
     _getAllNewsfeed();
   }, [_getAllNewsfeed]);
 
+  useEffect(() => {
+    console.log("running :>> ");
+    initApp();
+  }, []);
+
   return (
     <AppContext.Provider value={{ createNewsfeed, getNewsfeed, initApp }}>
       {children}
