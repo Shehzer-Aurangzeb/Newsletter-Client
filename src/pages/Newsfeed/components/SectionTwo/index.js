@@ -12,11 +12,13 @@ function SectionTwo({ title, image, qnA }) {
           <QandA key={index} question={question} answer={answer} />
         ))}
       </div>
-      <img
-        alt="section-two-pic"
-        src={image}
-        className="object-contain w-full md:max-w-[50%] md:mt-1"
-      />
+      {image && (
+        <img
+          alt="section-two-pic"
+          src={image}
+          className="object-contain w-full md:max-w-[50%] md:mt-1"
+        />
+      )}
     </div>
   );
 }

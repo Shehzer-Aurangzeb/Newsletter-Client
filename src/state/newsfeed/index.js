@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   newsfeeds: [],
   selectedNewsfeed: undefined,
+  unpreviewedNewsfeed: undefined,
   fetchedNewsfeeds: [],
 };
 
@@ -14,6 +15,12 @@ const newsfeedSlice = createSlice({
       return {
         ...state,
         newsfeeds: action.payload,
+      };
+    },
+    setUnpreviewedNewsfeedAction: (state, action) => {
+      return {
+        ...state,
+        unpreviewedNewsfeed: action.payload,
       };
     },
     updateNewsfeedsAction: (state, action) => {
@@ -42,5 +49,6 @@ export const {
   setSelectedNewsfeedAction,
   setFetchedNewsfeedsAction,
   updateNewsfeedsAction,
+  setUnpreviewedNewsfeedAction,
 } = newsfeedSlice.actions;
 export default newsfeedSlice.reducer;

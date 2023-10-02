@@ -5,13 +5,13 @@ import {
   setFetchedNewsfeedsAction,
   setNewsfeedsAction,
   setSelectedNewsfeedAction,
+  setUnpreviewedNewsfeedAction,
   updateNewsfeedsAction,
 } from ".";
 
 export const useNewsfeed = () => {
-  const { newsfeeds, selectedNewsfeed, fetchedNewsfeeds } = useSelector(
-    (state) => state.newsfeed
-  );
+  const { newsfeeds, selectedNewsfeed, fetchedNewsfeeds, unpreviewedNewsfeed } =
+    useSelector((state) => state.newsfeed);
   const dispatch = useAppDispatch();
 
   const setNewsfeeds = useCallback(
@@ -32,6 +32,12 @@ export const useNewsfeed = () => {
     },
     [dispatch]
   );
+  const setUnpreviewedNewsfeed = useCallback(
+    (payload) => {
+      dispatch(setUnpreviewedNewsfeedAction(payload));
+    },
+    [dispatch]
+  );
   const setFetchedNewsfeeds = useCallback(
     (payload) => {
       dispatch(setFetchedNewsfeedsAction(payload));
@@ -45,7 +51,9 @@ export const useNewsfeed = () => {
     setSelectedNewsfeed,
     newsfeeds,
     fetchedNewsfeeds,
+    unpreviewedNewsfeed,
     setFetchedNewsfeeds,
     updateNewsfeeds,
+    setUnpreviewedNewsfeed,
   };
 };

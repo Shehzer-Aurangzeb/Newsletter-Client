@@ -60,4 +60,10 @@ export const PATHS = {
   HOME: "/",
   CREATE: "/newsfeed/create",
   NEWSFEED: "/newsfeed",
+  EDIT: "/newsfeed/edit",
+};
+
+export const SOURCE = {
+  PENDING: "pending",
+  LIVE: "live",
 };

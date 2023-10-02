@@ -1,32 +1,42 @@
+import React from "react";
 import { useFormik } from "formik";
-import React, { useState } from "react";
-import Input from "../../../components/Input";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PostSchema } from "../../../schema";
-import { POSTFORMINITIALVALUES } from "../../../constants";
+import { PATHS, POSTFORMINITIALVALUES } from "../../../constants";
+import { eyeIcon } from "../../../constants/assets";
 import Button from "../../../components/Button";
+import Input from "../../../components/Input";
 import DynamicQAndAFields from "./DynamicFieldsInput/QAndA";
 import DynamicPostFields from "./DynamicFieldsInput/Posts";
 import DynamicFiguresFields from "./DynamicFieldsInput/Figures";
-
 import FormActions from "./FormActions";
 import { useApp } from "../../../context/AppProvider";
 import { useLoading } from "../../../state/loading/hooks";
-import SuccessActions from "./SuccessActions";
+import { useNewsfeed } from "../../../state/newsfeed/hooks";
 
 function CreateNewsfeed() {
   // const [files, setFiles] = useState({});
-  const { createNewsfeed } = useApp();
+  const { createNewsfeed, editNewsfeed } = useApp();
+  const { unpreviewedNewsfeed } = useNewsfeed();
   const { isLoading } = useLoading();
-  const [isNewsfeedCreated, setIsNewsfeedCreated] = useState(undefined);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const isEditPage = () => {
+    return pathname.includes("edit");
+  };
   const { handleSubmit, handleChange, values, touched, errors, setFieldValue } =
     useFormik({
-      initialValues: POSTFORMINITIALVALUES,
+      initialValues: isEditPage() ? unpreviewedNewsfeed : POSTFORMINITIALVALUES,
       validationSchema: PostSchema,
 
       onSubmit: async (results, onSubmit) => {
-        console.log("values", results);
+        console.log("results :>> ", results);
+        if (isEditPage()) {
+          const response = await editNewsfeed(results);
+          if (response.id) navigate(`${PATHS.NEWSFEED}/${response.id}/preview`);
+        }
         const response = await createNewsfeed(results);
-        if (response.id) setIsNewsfeedCreated(response.id);
+        if (response.id) navigate(`${PATHS.NEWSFEED}/${response.id}/preview`);
         onSubmit.setSubmitting(false);
       },
     });
@@ -440,11 +450,11 @@ function CreateNewsfeed() {
         <Button
           type="submit"
           className="w-full"
-          title="Submit"
+          title="Preview"
           isLoading={isLoading}
+          icon={eyeIcon}
         />
       </form>
-      <SuccessActions disable={!isNewsfeedCreated} id={isNewsfeedCreated} />
     </div>
   );
 }
