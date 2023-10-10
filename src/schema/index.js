@@ -91,3 +91,8 @@ export const PostSchema = object({
     })
   ),
 });
+
+export const LogInSchema = object({
+  email: string().email().required("Email is required"),
+  password: string().required("Password is required"),
+});

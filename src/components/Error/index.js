@@ -9,10 +9,7 @@ function Error({ error }) {
         <h1 className="font-nunito font-bold text-2xl text-link text-center">
           {error}
         </h1>
-        <Link
-          to={PATHS.HOME}
-          className="text-center bg-transparent border border-solid border-black px-8 py-2 transiton duration-300 hover:bg-black hover:text-white hover:border-white "
-        >
+        <Link to={PATHS.HOME} className="link text-center">
           Go Home
         </Link>
       </div>

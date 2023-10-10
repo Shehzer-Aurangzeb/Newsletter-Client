@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../constants";
 import Button from "../Button";
 import { useApp } from "../../context/AppProvider";
+import { useUser } from "../../state/user/hooks";
 
 function Footer({
   newsfeedsIds,
@@ -16,6 +17,7 @@ function Footer({
   const navigate = useNavigate();
   const { createNewsfeed } = useApp();
   const { pathname } = useLocation();
+  const { isAuthenticated } = useUser();
 
   const getNewsfeedId = useCallback(
     (action) => {
@@ -123,20 +125,22 @@ function Footer({
           </>
         )}
       </div>
-      {!isPreviewMode && (
+      {isAuthenticated && !isPreviewMode && (
         <Link
           to={PATHS.CREATE}
-          className="md:absolute md:right-[37px] md:top-1/2 md:-translate-y-1/2 bg-transparent border border-solid border-black px-8 py-2 transiton duration-300 hover:bg-black hover:text-white hover:border-white"
+          className="md:absolute md:right-[37px] md:top-1/2 md:-translate-y-1/2 link"
         >
           Create Post
         </Link>
       )}
-      <Button
-        className="md:absolute md:left-[37px] md:top-1/2 md:-translate-y-1/2"
-        icon={copyIcon}
-        title="Copy"
-        onClick={handleCopyToClipboard}
-      />
+      {isPreviewMode && (
+        <Button
+          className="md:absolute md:left-[37px] md:top-1/2 md:-translate-y-1/2"
+          icon={copyIcon}
+          title="Copy"
+          onClick={handleCopyToClipboard}
+        />
+      )}
     </div>
   );
 }

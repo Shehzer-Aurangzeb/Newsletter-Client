@@ -61,9 +61,15 @@ export const PATHS = {
   CREATE: "/newsfeed/create",
   NEWSFEED: "/newsfeed",
   EDIT: "/newsfeed/edit",
+  SIGNIN: "/signin",
 };
 
 export const SOURCE = {
   PENDING: "pending",
   LIVE: "live",
+};
+
+export const LOGINFORMINITIALVALUES = {
+  email: "",
+  password: "",
 };

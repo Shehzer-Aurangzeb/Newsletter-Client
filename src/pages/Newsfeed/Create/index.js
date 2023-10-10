@@ -30,7 +30,7 @@ function CreateNewsfeed() {
       validationSchema: PostSchema,
 
       onSubmit: async (results, onSubmit) => {
-        console.log("results :>> ", results);
+        // console.log("results :>> ", results);
         if (isEditPage()) {
           const response = await editNewsfeed(results);
           if (response.id) navigate(`${PATHS.NEWSFEED}/${response.id}/preview`);
