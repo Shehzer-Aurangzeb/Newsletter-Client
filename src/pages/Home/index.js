@@ -6,12 +6,13 @@ import { useUser } from "../../state/user/hooks";
 import { Link } from "react-router-dom";
 import { PATHS } from "../../constants";
 import Divider from "../../components/Divider";
-
+import Button from "../../components/Button";
+import { useAuth } from "../../hooks/useAuth";
 function Home() {
   const { isLoading } = useLoading();
   const { newsfeeds } = useNewsfeed();
   const { isAuthenticated } = useUser();
-
+  const { logoutUser } = useAuth();
   return (
     <DataLoaderOverlay isLoading={isLoading}>
       <div className="h-screen w-full relative">
@@ -26,13 +27,17 @@ function Home() {
             >
               Go to Latest Newsletter
             </Link>
-            {!isAuthenticated && (
-              <>
-                <Divider />
-                <Link to={PATHS.SIGNIN} className="text-center link w-full">
-                  Log In
-                </Link>
-              </>
+            <Divider />
+            {isAuthenticated ? (
+              <Button
+                title={"Logout"}
+                className="w-full"
+                onClick={logoutUser}
+              />
+            ) : (
+              <Link to={PATHS.SIGNIN} className="text-center link w-full">
+                Log In
+              </Link>
             )}
           </div>
         ) : (

@@ -5,6 +5,10 @@ import { useUser } from "../state/user/hooks";
 import { PATHS } from "../constants";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import {
+  deleteUserInfoFromLocalStorage,
+  saveUserInfoInLocalStorage,
+} from "../utils/cache";
 export const useAuth = () => {
   const { setIsLoading } = useLoading();
   const { setUser } = useUser();
@@ -17,6 +21,7 @@ export const useAuth = () => {
         const { data } = await api.post("auth/signin", credentials);
         if (!data.success) throw new Error(data.message);
         setUser({ user: data.user, isAuthenticated: true });
+        saveUserInfoInLocalStorage(data.user);
         const redirectUrl = localStorage.getItem("path") ?? PATHS.HOME;
         navigate(redirectUrl);
         toast.success("Welcome to Newsletter App");
@@ -31,9 +36,9 @@ export const useAuth = () => {
 
   const logoutUser = useCallback(() => {
     setUser({ user: undefined, isAuthenticated: false });
-    navigate(PATHS.HOME);
+    deleteUserInfoFromLocalStorage();
     toast.success("Logout Successfully");
-  }, [setUser, navigate]);
+  }, [setUser]);
 
   return {
     loginUser,
